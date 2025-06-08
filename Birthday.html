@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Barbie Queen!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --barbie-pink: #ff2d8e;
+            --barbie-light-pink: #ff9ec6;
+            --barbie-purple: #a156b4;
+            --barbie-blue: #00c4e4;
+            --barbie-yellow: #f9e300;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff0f5;
+            overflow-x: hidden;
+        }
+        
+        .barbie-font {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .glitter {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glitter::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.8) 50%,
+                rgba(255, 255, 255, 0) 55%
+            );
+            transform: rotate(30deg);
+            animation: glitter 3s infinite;
+        }
+        
+        @keyframes glitter {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+        
+        .heart-beat {
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .rotate {
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .photo-frame {
+            border: 15px solid white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transform: rotate(-5deg);
+            transition: all 0.3s ease;
+        }
+        
+        .photo-frame:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        
+        .polaroid {
+            background: white;
+            padding: 15px 15px 60px 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transform: rotate(3deg);
+            transition: all 0.3s ease;
+        }
+        
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        
+        .polaroid:nth-child(even) {
+            transform: rotate(-3deg);
+        }
+        
+        .polaroid:nth-child(even):hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        
+        .gift-box {
+            perspective: 1000px;
+        }
+        
+        .gift-lid {
+            transform-origin: bottom;
+            transition: all 0.5s ease;
+        }
+        
+        .gift-box:hover .gift-lid {
+            transform: rotateX(110deg);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--barbie-pink);
+            opacity: 0;
+        }
+        
+        .modal {
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-pink-200 opacity-20 animate-pulse"></div>
+        <div class="absolute top-1/3 right-20 w-32 h-32 rounded-full bg-purple-200 opacity-20 animate-pulse"></div>
+        <div class="absolute bottom-20 left-1/4 w-24 h-24 rounded-full bg-blue-200 opacity-20 animate-pulse"></div>
+        <div class="absolute bottom-1/3 right-1/3 w-16 h-16 rounded-full bg-yellow-200 opacity-20 animate-pulse"></div>
+    </div>
+    
+    <!-- Floating Barbie Icons -->
+    <div class="fixed top-20 right-10 text-4xl text-pink-500 bounce">
+        <i class="fas fa-heart"></i>
+    </div>
+    <div class="fixed bottom-40 left-10 text-5xl text-purple-500 rotate">
+        <i class="fas fa-star"></i>
+    </div>
+    <div class="fixed top-1/4 left-1/3 text-3xl text-blue-500 bounce" style="animation-delay: 0.5s;">
+        <i class="fas fa-crown"></i>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-12 relative z-10">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 barbie-font text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
+                Happy Birthday <span class="glitter relative inline-block">Barbie Queen!</span>
+            </h1>
+            <div class="text-xl md:text-2xl text-pink-600 mb-8">
+                <p>Celebrating you on June 21, 2025</p>
+            </div>
+            
+            <!-- Countdown Timer -->
+            <div class="max-w-2xl mx-auto bg-white bg-opacity-80 rounded-xl shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold text-pink-600 mb-4">Countdown to the Big Day!</h2>
+                <div class="flex justify-center gap-4 text-center">
+                    <div class="bg-pink-100 rounded-lg p-3 w-20">
+                        <div id="days" class="text-3xl font-bold text-pink-600">00</div>
+                        <div class="text-sm text-pink-800">Days</div>
+                    </div>
+                    <div class="bg-purple-100 rounded-lg p-3 w-20">
+                        <div id="hours" class="text-3xl font-bold text-purple-600">00</div>
+                        <div class="text-sm text-purple-800">Hours</div>
+                    </div>
+                    <div class="bg-blue-100 rounded-lg p-3 w-20">
+                        <div id="minutes" class="text-3xl font-bold text-blue-600">00</div>
+                        <div class="text-sm text-blue-800">Minutes</div>
+                    </div>
+                    <div class="bg-yellow-100 rounded-lg p-3 w-20">
+                        <div id="seconds" class="text-3xl font-bold text-yellow-600">00</div>
+                        <div class="text-sm text-yellow-800">Seconds</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="surpriseBtn" class="mt-6 px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                <i class="fas fa-gift mr-2"></i> Click for a Surprise!
+            </button>
+        </header>
+        
+        <!-- Birthday Message -->
+        <section class="max-w-4xl mx-auto bg-white bg-opacity-90 rounded-3xl shadow-xl p-8 mb-12">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-6 md:mb-0 flex justify-center">
+                    <div class="photo-frame bg-pink-100 p-2">
+                        <img src="Picture/Jane15.jpg" alt="Barbie" class="w-64 h-auto">
+                    </div>
+                </div>
+                <div class="md:w-2/3 md:pl-8">
+                    <h2 class="text-3xl font-bold text-pink-600 mb-4 barbie-font">To My Beautiful Girlfriend,</h2>
+                    <p class="text-lg text-gray-700 mb-4">
+                        On this special day, I want you to know how much you mean to me. You're more than just my girlfriend - you're my inspiration, my joy, and my everything.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-4">
+                        Like Barbie, you're strong, confident, and absolutely stunning. You can be anything you want to be, and I'll always be here cheering you on.
+                    </p>
+                    <p class="text-xl text-pink-600 font-bold">
+                        Happy Birthday to the most amazing woman in my world! 💖
+                    </p>
+                    <div class="mt-6 flex justify-center md:justify-start">
+                        <div class="text-4xl">
+                            <i class="fas fa-heart text-pink-500 mx-1 heart-beat"></i>
+                            <i class="fas fa-star text-yellow-400 mx-1 bounce" style="animation-delay: 0.2s;"></i>
+                            <i class="fas fa-heart text-purple-500 mx-1 heart-beat" style="animation-delay: 0.4s;"></i>
+                            <i class="fas fa-crown text-blue-400 mx-1 bounce" style="animation-delay: 0.6s;"></i>
+                        </div>	
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Photo Gallery -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-pink-600 mb-8 barbie-font">Our Barbie Moments</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Polaroid-style photos -->
+                <div class="polaroid">
+                    <img src="Picture/Jane6.jpg" alt="Memory 1" class="w-full h-64 object-cover">
+                    <p class="text-center mt-2 text-gray-700">Our first date</p>
+                </div>
+                <div class="polaroid">
+                    <img src="Picture/Jane7.jpg" alt="Memory 2" class="w-full h-64 object-cover">
+                    <p class="text-center mt-2 text-gray-700">First Baby</p>
+                </div>
+                <div class="polaroid">
+                    <img src="Picture/Jane8.jpg" alt="Memory 3" class="w-full h-64 object-cover">
+                    <p class="text-center mt-2 text-gray-700">Her Unicorn</p>
+                </div>
+                <div class="polaroid">
+                    <img src="Picture/Jane12.jpg" alt="Memory 4" class="w-full h-64 object-cover">
+                    <p class="text-center mt-2 text-gray-700">Celebration</p>
+                </div>
+                <div class="polaroid">
+                    <img src="Picture/jane10.jpg" alt="Memory 5" class="w-full h-64 object-cover">
+                    <p class="text-center mt-2 text-gray-700">Always classy</p>
+                </div>
+                <div class="polaroid">
+                    <img src="Picture/Jane2.jpg" alt="Memory 6" class="w-full h-64 object-cover">
+                    <p class="text-center mt-2 text-gray-700">First Holding hands</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Birthday Wishes -->
+        <section class="max-w-4xl mx-auto bg-gradient-to-br from-pink-100 to-purple-100 rounded-3xl shadow-xl p-8 mb-12">
+            <h2 class="text-3xl font-bold text-center text-pink-600 mb-6 barbie-font">Birthday Wishes For You</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white bg-opacity-80 rounded-xl p-6 shadow-md">
+                    <h3 class="text-xl font-bold text-purple-600 mb-3">What I Love About You</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-heart text-pink-400 mt-1 mr-2"></i>
+                            <span>Your beautiful smile that lights up my world</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-heart text-pink-400 mt-1 mr-2"></i>
+                            <span>Your kind heart and caring nature</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-heart text-pink-400 mt-1 mr-2"></i>
+                            <span>The way you make every day special</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-heart text-pink-400 mt-1 mr-2"></i>
+                            <span>Your strength and determination</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white bg-opacity-80 rounded-xl p-6 shadow-md">
+                    <h3 class="text-xl font-bold text-blue-600 mb-3">Birthday Promises</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
+                            <span>To always be there for you</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
+                            <span>To make you laugh every day</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
+                            <span>To support your dreams</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
+                            <span>To love you more each year</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Interactive Gift Box -->
+        <section class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-pink-600 mb-8 barbie-font">Open Your Birthday Gift!</h2>
+            <div class="flex justify-center">
+                <div class="gift-box cursor-pointer">
+                    <div class="gift-lid bg-gradient-to-r from-pink-500 to-purple-500 w-48 h-16 rounded-t-lg relative">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-pink-300 rounded-full"></div>
+                        <div class="absolute top-4 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-pink-200 rounded-full"></div>
+                    </div>
+                    <div class="gift-base bg-gradient-to-r from-purple-500 to-blue-500 w-48 h-32 rounded-b-lg relative overflow-hidden">
+                        <div class="absolute top-4 left-1/2 transform -translate-x-1/2 w-40 h-2 bg-purple-200 rounded-full"></div>
+                        <div id="giftMessage" class="absolute inset-0 flex items-center justify-center text-white font-bold opacity-0 transition-opacity duration-300">
+                            <p>You're the best gift I could ever receive! 💖</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Birthday Playlist -->
+        <section class="max-w-4xl mx-auto bg-white bg-opacity-90 rounded-3xl shadow-xl p-8 mb-12">
+            <h2 class="text-3xl font-bold text-center text-pink-600 mb-6 barbie-font">Barbie Birthday Playlist</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-pink-50 rounded-xl p-4 flex items-center">
+                    <div class="w-16 h-16 bg-pink-200 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-music text-pink-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-pink-600">Dance the Night</h3>
+                        <p class="text-gray-600">From Barbie The Movie</p>
+                    </div>
+                </div>
+                <div class="bg-purple-50 rounded-xl p-4 flex items-center">
+                    <div class="w-16 h-16 bg-purple-200 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-music text-purple-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-purple-600">Happy Birthday</h3>
+                        <p class="text-gray-600">Barbie Version</p>
+                    </div>
+                </div>
+                <div class="bg-blue-50 rounded-xl p-4 flex items-center">
+                    <div class="w-16 h-16 bg-blue-200 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-music text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-blue-600">What Was I Made For?</h3>
+                        <p class="text-gray-600">Billie Eilish</p>
+                    </div>
+                </div>
+                <div class="bg-yellow-50 rounded-xl p-4 flex items-center">
+                    <div class="w-16 h-16 bg-yellow-200 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-music text-yellow-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-yellow-600">Barbie Girl</h3>
+                        <p class="text-gray-600">Aqua (Classic!)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <button class="px-6 py-2 bg-pink-500 text-white rounded-full font-medium hover:bg-pink-600 transition-colors">
+                    <i class="fas fa-play mr-2"></i> Play Full Playlist
+                </button>
+            </div>
+        </section>
+        
+        <!-- Final Message -->
+        <section class="text-center mb-12">
+            <div class="max-w-2xl mx-auto bg-gradient-to-r from-pink-500 to-purple-500 rounded-3xl shadow-xl p-8 text-white">
+                <h2 class="text-3xl font-bold mb-4 barbie-font">To My Barbie</h2>
+                <p class="text-xl mb-6">
+                    May your birthday be as bright and beautiful as you are. Here's to another year of amazing adventures together!
+                </p>
+                <div class="text-5xl">
+                    <i class="fas fa-heart mx-2 heart-beat"></i>
+                    <i class="fas fa-heart mx-2 heart-beat" style="animation-delay: 0.3s;"></i>
+                    <i class="fas fa-heart mx-2 heart-beat" style="animation-delay: 0.6s;"></i>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Surprise Modal -->
+    <div id="surpriseModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 modal">
+        <div class="bg-white rounded-3xl max-w-md w-full mx-4 p-8 relative overflow-hidden">
+            <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            <div class="text-center">
+                <div class="text-6xl text-pink-500 mb-4">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-pink-600 mb-4 barbie-font">Surprise!</h3>
+                <p class="text-gray-700 mb-6">
+                    I have a special birthday surprise planned for you on June 21st! Get ready for a day filled with love, laughter, and all things Barbie!
+                </p>
+                <div class="animate-bounce text-4xl text-yellow-400">
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confetti Container -->
+    <div id="confettiContainer" class="fixed inset-0 pointer-events-none overflow-hidden z-40"></div>
+    
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const birthday = new Date("June 21, 2025 00:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = birthday - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Gift Box Interaction
+        const giftBox = document.querySelector('.gift-box');
+        const giftMessage = document.getElementById('giftMessage');
+        
+        giftBox.addEventListener('mouseenter', () => {
+            giftMessage.style.opacity = '1';
+        });
+        
+        giftBox.addEventListener('mouseleave', () => {
+            giftMessage.style.opacity = '0';
+        });
+        
+        // Surprise Button
+        const surpriseBtn = document.getElementById('surpriseBtn');
+        const surpriseModal = document.getElementById('surpriseModal');
+        const closeModal = document.getElementById('closeModal');
+        
+        surpriseBtn.addEventListener('click', () => {
+            surpriseModal.classList.add('active');
+            createConfetti();
+        });
+        
+        closeModal.addEventListener('click', () => {
+            surpriseModal.classList.remove('active');
+        });
+        
+        // Confetti Effect
+        function createConfetti() {
+            const colors = ['#ff2d8e', '#a156b4', '#00c4e4', '#f9e300', '#ffffff'];
+            const container = document.getElementById('confettiContainer');
+            
+            // Clear previous confetti
+            container.innerHTML = '';
+            
+            // Create new confetti
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                container.appendChild(confetti);
+                
+                // Animate confetti
+                animateConfetti(confetti);
+            }
+        }
+        
+        function animateConfetti(element) {
+            const startTime = Date.now();
+            const duration = Math.random() * 3000 + 2000;
+            const startLeft = parseFloat(element.style.left);
+            const rotation = Math.random() * 360;
+            
+            function update() {
+                const elapsed = Date.now() - startTime;
+                const progress = elapsed / duration;
+                
+                if (progress < 1) {
+                    element.style.top = (progress * 100) + 'vh';
+                    element.style.left = (startLeft + Math.sin(progress * Math.PI * 2) * 100) + 'px';
+                    element.style.transform = `rotate(${rotation * progress}deg)`;
+                    element.style.opacity = (1 - progress * 0.7).toString();
+                    requestAnimationFrame(update);
+                } else {
+                    element.remove();
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+        
+        // Polaroid photo hover effect
+        const polaroids = document.querySelectorAll('.polaroid');
+        polaroids.forEach(polaroid => {
+            polaroid.addEventListener('mouseenter', () => {
+                polaroid.style.transform = 'rotate(0deg) scale(1.05)';
+            });
+            
+            polaroid.addEventListener('mouseleave', () => {
+                const isEven = Array.from(polaroids).indexOf(polaroid) % 2 === 1;
+                polaroid.style.transform = isEven ? 'rotate(-3deg)' : 'rotate(3deg)';
+            });
+        });
+    </script>
+</body>
+</html>
